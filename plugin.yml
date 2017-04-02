@@ -1,0 +1,18 @@
+name: PrivateNametag
+author: KennFatt
+version: 1.1
+api: [2.0.0, 3.0.0, 3.0.1]
+website: https://www.github.com/KennFatt
+main: kennan\Main
+
+commands:
+  pnt:
+    description: "Manage your private nametag!"
+    default: op
+    permission: kennan.pnt.cmd
+    usage: "Usage: /pnt"
+
+permissions:
+  kennan.pnt.cmd:
+    description: "Run a command"
+    default: op
