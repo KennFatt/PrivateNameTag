@@ -44,6 +44,14 @@ class Main extends \pocketmine\plugin\PluginBase implements \pocketmine\event\Li
     }
   }
 
+  public function onQuit(\pocketmine\event\player\PlayerQuitEvent $e)
+  {
+    // NOTE : it may affect server performance because of checking every single player when left server.
+    if ($this->isInPrivate($e->getPlayer())) {
+      unset($this->cache[$e->getPlayer()->getName()]);
+    }
+  }
+
   public function onLogin(\pocketmine\event\player\PlayerLoginEvent $e)
   {
     if ($this->config->get('enable.onlogin')) {
@@ -83,7 +91,7 @@ class Main extends \pocketmine\plugin\PluginBase implements \pocketmine\event\Li
    */
   public function isInPrivate(\pocketmine\Player $target) : bool
   {
-    return array_key_exists($target->getName(), $this->getCache());
+    return isset($this->cache[$target->getName()]);
   }
 
   /**
@@ -136,7 +144,7 @@ class Main extends \pocketmine\plugin\PluginBase implements \pocketmine\event\Li
 
     $pnt = "";
 
-    $this->cache[$target->getName()] = [$target->getNameTag()]; //TODO try hacky way ($this->getNameTag($target))
+    $this->cache[$target->getName()] = [$target->getNameTag()];
     for ($i=1; $i <= strlen($target->getNameTag()); $i++) {
       $pnt .= $this->config->get('replace.with');
     }
@@ -154,7 +162,7 @@ class Main extends \pocketmine\plugin\PluginBase implements \pocketmine\event\Li
    * Will return to boolean and check if this function are working properly or not
    * @return boolean
    */
-  public function revertNameTag(\pocketmine\Player $target) : boolean
+  public function revertNameTag(\pocketmine\Player $target) : bool
   {
     if (!$this->isInPrivate($target)) {
       $target->sendMessage("§o§6You are using default NameTag!");

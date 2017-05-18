@@ -1,9 +1,9 @@
 name: PrivateNametag
 author: KennFatt
-version: 1.1
+version: 1.2
 api: [2.0.0, 3.0.0, 3.0.1]
 website: https://www.github.com/KennFatt
-main: kennan\Main
+main: kennan\pnt\Main
 
 commands:
   pnt:
